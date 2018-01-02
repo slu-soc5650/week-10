@@ -1,6 +1,10 @@
 lecture-10 <img src="https://slu-soc5650.github.io/images/logo.png" align="right" />
 ===========================================================
-![](https://img.shields.io/badge/semester-Spring%2C%202017-blue.svg) ![](https://img.shields.io/badge/release-updated-brightgreen.svg) ![](https://img.shields.io/github/last-commit/slu-soc5650/lecture-10.svg) ![](https://img.shields.io/github/repo-size/slu-soc5650/lecture-10.svg)
+[![](https://img.shields.io/badge/semester-Spring%2C%202017-blue.svg)](https://github.com/slu-soc5650/lecture-10)
+[![](https://img.shields.io/badge/release-updated-brightgreen.svg)](https://github.com/slu-soc5650/lecture-10)
+[![](https://img.shields.io/github/release/slu-soc5650/lecture-10.svg?label=version)](https://github.com/slu-soc5650/lecture-10/releases)
+[![](https://img.shields.io/github/last-commit/slu-soc5650/lecture-10.svg)](https://github.com/slu-soc5650/lecture-10/commits/master)
+[![](https://img.shields.io/github/repo-size/slu-soc5650/lecture-10.svg)](https://github.com/slu-soc5650/lecture-10)
 
 This repository contains files for:
 
