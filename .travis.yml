@@ -10,3 +10,4 @@ os:
   - osx
 
 script:
+  - Rscript -e "rmarkdown::render('examples/lecture-10.Rmd')"
