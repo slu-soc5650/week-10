@@ -6,3 +6,4 @@
 * Update `.gitignore`
 * Add `NEWS_SITE.md` for tracking changes specific to the corresponding page on the course website
 * Convert lecture to new template with `.github/`, `references/` folders
+* Add lecture prep 09 instructions
