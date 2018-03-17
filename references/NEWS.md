@@ -1,3 +1,8 @@
+# lecture-10 v18.2.0
+
+* add function handout and example code
+* enable continuous integration
+
 # lecture-10 v18.1.0
 
 * Add `NEWS.md`
