@@ -1,7 +1,7 @@
 lecture-10 <img src="https://slu-soc5650.github.io/images/logo.png" align="right" />
 ===========================================================
 [![](https://img.shields.io/badge/semester-spring%202018-orange.svg)](https://github.com/slu-soc5650/lecture-10)
-[![](https://img.shields.io/badge/release-lp%20only-red.svg)](https://github.com/slu-soc5650/lecture-10)
+[![](https://img.shields.io/badge/release-draft-red.svg)](https://github.com/slu-soc5650/lecture-10)
 [![](https://img.shields.io/github/release/slu-soc5650/lecture-10.svg?label=version)](https://github.com/slu-soc5650/lecture-10/releases)
 [![](https://img.shields.io/github/last-commit/slu-soc5650/lecture-10.svg)](https://github.com/slu-soc5650/lecture-10/commits/master)
 [![](https://img.shields.io/github/repo-size/slu-soc5650/lecture-10.svg)](https://github.com/slu-soc5650/lecture-10)
