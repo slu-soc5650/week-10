@@ -106,3 +106,6 @@ leaflet() %>%
   addMarkers(data = campus_sf_wgs)
 ```
 
+The final map image from `leaflet()` is included here since interactive objects are not included in knit documents:
+
+![](img/leafletMap.png)
