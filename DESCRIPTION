@@ -8,7 +8,7 @@ Description: This is the repository for Lecture 10 of the Saint Louis University
     for working with different projection systems and projecting x,y data in `R` 
     and ArcGIS.
 Depends: R (>= 3.3)
-License: GPL-3
+License: CC-BY-SA-4.0 + LICENSE
 Web: https://slu-soc5650.github.io
 URL: https://github.com/slu-soc5650/lecture-10
 BugReports: https://github.com/slu-soc5650/lecture-10/issues
