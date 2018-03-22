@@ -1,3 +1,10 @@
+# lecture-10 v18.2.1.9000
+
+* add `st_crs()` function to handout, example code
+* add ArcMap handout
+* add image of `leaflet` output
+* add `stateCapitals.csv`
+
 # lecture-10 v18.2.0
 
 * add function handout and example code
