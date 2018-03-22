@@ -1,7 +1,7 @@
 Lecture 10 Notebook
 ================
 Christopher Prener, Ph.D.
-(March 16, 2018)
+(March 22, 2018)
 
 Introduction
 ------------
@@ -49,7 +49,17 @@ stl
     ##   GEOID           NAME LAND_SQMI WATER_SQMI                       geometry
     ## 1 29510 St. Louis City   61.9532   4.119725 POLYGON ((-90.32052 38.5941...
 
-We can see that the `epsg` value is `4269`. When we look at the `proj4string` value, we see a reference to the `NAD83` datum. If we [look up the given `epsg` value of `4269`](http://spatialreference.org/ref/epsg/4269/), we will see that it is for the `NAD 1983` geographic coordinate system. This gives us a starting place. Remember that the `proj4string` output may not always be as helpful as the `epsg` value!
+We can see that the `epsg` value is `4269`. When we look at the `proj4string` value, we see a reference to the `NAD83` datum. If we [look up the given `epsg` value of `4269`](http://spatialreference.org/ref/epsg/4269/), we will see that it is for the `NAD 1983` geographic coordinate system. This gives us a starting place.
+
+It is also possible to get just the top portion of the output above that tells us about the projection system used by the `sf` object using the `st_crs()` function:
+
+``` r
+st_crs(stl)
+```
+
+    ## Coordinate Reference System:
+    ##   EPSG: 4269 
+    ##   proj4string: "+proj=longlat +datum=NAD83 +no_defs"
 
 If we needed to re-project the data using a different coordinate system, we can use `st_transform()` to do so. For instance, we could convert the `stl` data to WGS 1984 using the epsg code `4326`:
 
@@ -142,7 +152,7 @@ leaflet() %>%
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-78fe3d80675e3c310c26">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[38.637547,38.635959,38.635283,38.636741,38.634973,38.636897],[-90.237104,-90.234837,-90.235841,-90.234972,-90.232955,-90.236313],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,null,null]}],"limits":{"lat":[38.634973,38.637547],"lng":[-90.237104,-90.232955]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-562805c743585ec36289">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[38.637547,38.635959,38.635283,38.636741,38.634973,38.636897],[-90.237104,-90.234837,-90.235841,-90.234972,-90.232955,-90.236313],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,null,null]}],"limits":{"lat":[38.634973,38.637547],"lng":[-90.237104,-90.232955]}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 Excellent! Our data project and appear to be on campus. This is a good sign. If they appeared out at sea or in a different part of the country, we would need to check that the columns and the `crs` value were specified correctly.
 
@@ -162,5 +172,5 @@ leaflet() %>%
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-a09fd85eabe15dbed931">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[38.637547,38.635959,38.635283,38.636741,38.634973,38.636897],[-90.237104,-90.234837,-90.235841,-90.234972,-90.232955,-90.236313],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,null,null]}],"limits":{"lat":[38.634973,38.637547],"lng":[-90.237104,-90.232955]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-7ac0dada740245ebfc1b">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[38.637547,38.635959,38.635283,38.636741,38.634973,38.636897],[-90.237104,-90.234837,-90.235841,-90.234972,-90.232955,-90.236313],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,null,null]}],"limits":{"lat":[38.634973,38.637547],"lng":[-90.237104,-90.232955]}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->

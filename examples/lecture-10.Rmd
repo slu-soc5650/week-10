@@ -35,7 +35,13 @@ To begin, we'll explore the projection data for the `stl` object:
 stl
 ```
 
-We can see that the `epsg` value is `4269`. When we look at the `proj4string` value, we see a reference to the `NAD83` datum. If we [look up the given `epsg` value of `4269`](http://spatialreference.org/ref/epsg/4269/), we will see that it is for the `NAD 1983` geographic coordinate system. This gives us a starting place. Remember that the `proj4string` output may not always be as helpful as the `epsg` value!
+We can see that the `epsg` value is `4269`. When we look at the `proj4string` value, we see a reference to the `NAD83` datum. If we [look up the given `epsg` value of `4269`](http://spatialreference.org/ref/epsg/4269/), we will see that it is for the `NAD 1983` geographic coordinate system. This gives us a starting place. 
+
+It is also possible to get just the top portion of the output above that tells us about the projection system used by the `sf` object using the `st_crs()` function:
+
+```{r crs-only}
+st_crs(stl)
+```
 
 If we needed to re-project the data using a different coordinate system, we can use `st_transform()` to do so. For instance, we could convert the `stl` data to WGS 1984 using the epsg code `4326`:
 
