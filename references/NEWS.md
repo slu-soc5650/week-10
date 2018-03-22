@@ -1,4 +1,4 @@
-# lecture-10 v18.2.1.9000
+# lecture-10 v18.2.1
 
 * add `st_crs()` function to handout, example code
 * add ArcMap handout
