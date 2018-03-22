@@ -1,3 +1,8 @@
+# lecture-10 v18.2.3
+
+* add `lab-09` instructions handout
+* add beginnings of `lab-09` replication file
+
 # lecture-10 v18.2.2
 
 * add lecture slides
