@@ -1,3 +1,7 @@
+# lecture-10 v18.2.2
+
+* add lecture slides
+
 # lecture-10 v18.2.1
 
 * add `st_crs()` function to handout, example code
