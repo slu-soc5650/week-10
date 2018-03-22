@@ -1,0 +1,65 @@
+---
+title: "Lab 09 Replication Notebook"
+author: "Christopher Prener, Ph.D."
+date: '(`r format(Sys.time(), "%B %d, %Y")`)'
+output: 
+  github_document: default
+  html_notebook: default 
+always_allow_html: yes
+---
+
+## Introduction
+This is the replication notebook for Lab 09 from the course SOC 4650/5650: Introduction to GISc.
+
+## Load Dependencies
+The following code loads the package dependencies for our analysis:
+
+```{r package-load}
+# tidyverse packages
+library(dplyr)   # data
+library(readr)   # work with csv files
+
+# other packages
+library(here)    # manage file paths
+library(leaflet) # interactive mapping
+library(sf)      # spatial data tools
+```
+
+## Load Data
+We'll use data distributed with the `lecture-10` repository:
+
+```{r load-data}
+capitals <- read_csv(here("data", "stateCapitals.csv"))
+```
+
+## Projecting State Capitals
+The state capitals data contain four variables and a row for each of the 50 U.S. states:
+
+```{r}
+glimpse(capitals)
+```
+
+The `longitude` data is always the `x` variable and the `latitude` data is always the `y` variable. To project based on these two variables, we'll use the `st_as_sf()` function and assign the output to a new object:
+
+```{r}
+capitals_sf <- st_as_sf(capitals, coords = c(x = "longitude", y = "latitude"), crs = 4326)
+```
+
+Note that we used the `WGS 1984` coordinate system initially so that we don't get errors from `leaflet`. We'll use `leaflet` to test our projected point data and make sure that the markers appear over state capitals:
+
+```{r}
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(data = capitals)
+```
+
+With our data visually verified, we can go ahead and (1) re-project them from `WGS 1984` to `NAD 1983` and then (2)  export them to our project's `data/` directory.
+
+```{r}
+capitals_sf %>%
+  st_transform(crs = 4269) %>%
+  st_write(here("data", "US_CAPITALS", "US_CAPITALS.shp"), delete_dsn = TRUE)
+```
+
+Notice how we can pipe these functions - the `sf` package allows us to use `%>%` to pass `sf` object names through functions. Since we are using a function that writes to our hard disk, we do not need to include an outgoing assignment to an object at the end of the pipe.
+
