@@ -4,6 +4,7 @@
 * add ArcMap handout
 * add image of `leaflet` output
 * add `stateCapitals.csv`
+* update license to CC-BY-SA 4.0
 
 # lecture-10 v18.2.0
 
