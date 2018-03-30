@@ -16,7 +16,8 @@ The following code loads the package dependencies for our analysis:
 
 ```{r package-load}
 # tidyverse packages
-library(dplyr)   # data
+library(dplyr)   # data wrangling
+library(ggplot2) # plot data
 library(readr)   # work with csv files
 
 # other packages
@@ -30,24 +31,27 @@ We'll use data distributed with the `lecture-10` repository:
 
 ```{r load-data}
 capitals <- read_csv(here("data", "stateCapitals.csv"))
+counties <- st_read(here("data", "US_BOUNDARY_Counties", "US_BOUNDARY_Counties.shp"), 
+                    stringsAsFactors = FALSE)
+noins <- read_csv(here("data", "US_HEALTH_noIns.csv"))
 ```
 
 ## Projecting State Capitals
 The state capitals data contain four variables and a row for each of the 50 U.S. states:
 
-```{r}
+```{r glimpse-capitals}
 glimpse(capitals)
 ```
 
 The `longitude` data is always the `x` variable and the `latitude` data is always the `y` variable. To project based on these two variables, we'll use the `st_as_sf()` function and assign the output to a new object:
 
-```{r}
+```{r project-capitals}
 capitals_sf <- st_as_sf(capitals, coords = c(x = "longitude", y = "latitude"), crs = 4326)
 ```
 
 Note that we used the `WGS 1984` coordinate system initially so that we don't get errors from `leaflet`. We'll use `leaflet` to test our projected point data and make sure that the markers appear over state capitals:
 
-```{r}
+```{r preview-capitals}
 leaflet() %>%
   addTiles() %>%
   addMarkers(data = capitals)
@@ -55,7 +59,7 @@ leaflet() %>%
 
 With our data visually verified, we can go ahead and (1) re-project them from `WGS 1984` to `NAD 1983` and then (2)  export them to our project's `data/` directory.
 
-```{r}
+```{r write-capitals}
 capitals_sf %>%
   st_transform(crs = 4269) %>%
   st_write(here("data", "US_CAPITALS", "US_CAPITALS.shp"), delete_dsn = TRUE)
@@ -63,4 +67,76 @@ capitals_sf %>%
 
 Notice how we can pipe these functions - the `sf` package allows us to use `%>%` to pass `sf` object names through functions. Since we are using a function that writes to our hard disk, we do not need to include an outgoing assignment to an object at the end of the pipe.
 
-## 
+## Create Counties Shapefile
+We loaded data about county boundaries and un-insurance rates earlier in the notebook. It is time to join these data so that we have a combined shapefile. First, we have to check to make sure we have compatible ID variables:
+
+```{r check-for-id}
+glimpse(counties)
+glimpse(noins)
+```
+
+The good news is we have a `GEOID` variable in both tables. The bad news is that they are different forms - the insurance data is formatted as character or string. We can fix this using `mutate()`:
+
+```{r convert-geoid-string}
+noins <- mutate(noins, GEOID = as.numeric(GEOID))
+```
+
+We'll then use the `left_join()` function from `dplyr` to combine them:
+
+```{r left-join}
+noins_sf <- left_join(counties, noins, by = "GEOID")
+```
+
+We can check to make sure this worked using `glimpse()`:
+
+```{r gimplse-join}
+glimpse(noins_sf)
+```
+
+All looks good - we have have both the `noIns` variable and the `geometry` column, so we should be in business. We do have a bit of redundant data here, and could therefore drop by `state` and `county` variables from the data to save on storage space:
+
+```{r drop-vars}
+noins_sf <- select(noins_sf, -state, -county)
+```
+
+We also need to remove the deliberately coded missing values, which appear as `-1` in the data:
+
+```{r remove-missing}
+noins_sf <- filter(noins_sf, noIns >= 0)
+```
+
+
+Finally, we'll confirm that we are using `NAD 1983` (where the `EPSG` value is `4269`):
+
+```{r}
+st_crs(noins_sf)
+```
+
+Since no `EPSG` code is set, we'll add one. To do this, we'll use `st_set_crs()` instead of `st_transform()`:
+
+```{r set-crs}
+noins_sf <- st_set_crs(noins_sf, 4269)
+```
+
+We'll check to make sure the addition worked:
+
+```{r check-new-crs}
+st_crs(noins_sf)
+```
+
+Excellent! Now that they are properly projected, we can quickly preview these data as well using `ggplot2`:
+
+```{r preview-ins-data}
+noins_sf %>%
+  filter(STATEFP != "02" & STATEFP != "15" & STATEFP != "72") %>%
+  ggplot() +
+    geom_sf(mapping = aes(fill = noIns), color = NA) +
+    scale_fill_distiller(palette = "RdPu", trans = "reverse")
+```
+
+Finally, we'll write these data to a shapefile. Before excuting this step, I add a folder to the `data/` directory. You can also do this first step manually if you'd like.
+
+```{r}
+dir.create(here("data", "US_HEALTH_noIns"))
+st_write(noins_sf, here("data", "US_HEALTH_noIns", "US_HEALTH_noIns.shp"), delete_dsn = TRUE)
+```
