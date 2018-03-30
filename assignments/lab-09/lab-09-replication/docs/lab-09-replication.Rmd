@@ -63,3 +63,4 @@ capitals_sf %>%
 
 Notice how we can pipe these functions - the `sf` package allows us to use `%>%` to pass `sf` object names through functions. Since we are using a function that writes to our hard disk, we do not need to include an outgoing assignment to an object at the end of the pipe.
 
+## 
